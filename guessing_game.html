@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="guessing_game.css">
+</head>
+<body class="body">
+    <div class="box" id="box">
+        <p class="head">Guessing Game</p>
+        <input type="number" placeholder="Enter number" class="number" id="num" value="">
+        <div class="output" id="output-show">Guess a number between 1 to 100</div>
+        <div id="noOfTry"></div>
+        <button class="button" onclick="check1()">Add</button>
+    </div>
+    <div class="box display" id="box1">
+        <div class="show">Congratulation you won the game..</div>
+        <button class="button restart" onclick="restart()">Restart</button>
+    </div>
+
+    <script>
+        let target = Math.floor(Math.random()*100)
+        let beforeWinning = document.getElementById('box')
+        let afterWinning = document.getElementById('box1')
+        const output = document.getElementById("output-show")
+        const userNumber = document.getElementById("num")
+        const try1 = document.getElementById('noOfTry')
+        let chance = 0;
+        
+        chanceTake();
+        function check1(){
+            chance++;
+            try1.innerHTML = '';
+            chanceTake();
+            if(userNumber.value > target && userNumber.value <= 100){
+                high()
+            }
+            else if(userNumber.value < target && userNumber.value >= 1){
+                low()
+            }
+            else if(userNumber.value == target){
+                beforeWinning.classList.add('display')
+                afterWinning.classList.remove('display')
+            }
+            else {
+                output.innerHTML = "";
+                output.innerHTML += "Invalid input..."
+            }
+        }
+
+        function low(){
+            let Index = Math.floor(Math.random()*5)
+            const lowArr = [5];
+            lowArr[0] = 'Too low! Try guessing a higher number.'
+            lowArr[1] = "You're below the target. Think bigger!"
+            lowArr[2] = 'Close, but not quite — go higher!'
+            lowArr[3] = "Hmm... that's less than the correct number."
+            lowArr[4] = "Almost there! Try something greater."
+            userNumber.value = ""
+            userNumber.focus()
+            output.innerHTML = "" ;
+            output.innerHTML += lowArr[Index];
+        }
+        function high(){
+            let Index = Math.floor(Math.random()*5)
+            // console.log(Index)
+            const lowArr = [5];
+            lowArr[0] = 'Too high! Aim a little lower.'
+            lowArr[1] = "You overshot it — try a smaller number."
+            lowArr[2] = 'Not quite... that is more than the answer.'
+            lowArr[3] = "You're above the correct value."
+            lowArr[4] = "Go down a bit, you're too high!"
+            userNumber.value = ""
+            userNumber.focus()
+            output.innerHTML = "" ;
+            output.innerHTML += lowArr[Index];
+        }
+        function restart(){
+            chance = 0;
+            try1.innerHTML = '';
+            chanceTake();
+            target = Math.floor(Math.random()*100)
+            beforeWinning.classList.remove('display')
+            afterWinning.classList.add('display')
+            userNumber.value = ''
+            output.innerHTML = "" ;
+            output.innerHTML += 'Guess a number between 1 to 100';
+        }
+
+        function chanceTake(){
+
+            const div1 = document.createElement('div');
+            div1.classList = "design";
+            div1.textContent = `Chance Take : ${chance}`;
+            try1.appendChild(div1);
+            console.log(div1,try1)
+        }
+    </script>
+</body>
+</html>
